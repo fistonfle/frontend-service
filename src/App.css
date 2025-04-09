@@ -1,0 +1,107 @@
+.invoice-table-row {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .invoice-table-row {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+}
+
+.invoice-table-row:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(238 242 255 / var(--tw-bg-opacity));
+}
+
+.invoice-table-header:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+/* 
+.invoice-table-row div:first-child {
+    display: none;
+    flex-shrink: 0;
+    flex-basis: 8.333333%;
+} */
+
+/* @media (min-width: 768px) {
+    .invoice-table-row div:first-child {
+        display: block;
+    }
+}
+
+.invoice-table-row div:nth-child(2) {
+    flex-shrink: 0;
+    flex-basis: 25%;
+}
+
+.invoice-table-row div:nth-child(3) {
+    flex-shrink: 0;
+    flex-basis: 16.666667%;
+}
+
+.invoice-table-row div:nth-child(4) {
+    flex-shrink: 0;
+    flex-basis: 16.666667%;
+}
+
+.invoice-table-row div:nth-child(5) {
+    flex: 1 1 0%;
+    flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+    .invoice-table-row div:nth-child(5) {
+        flex: none;
+    }
+
+    .invoice-table-row div:nth-child(5) {
+        flex-basis: 16.666667%;
+    }
+}
+
+.invoice-table-row div:nth-child(6) {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    flex: 1 1 0%;
+}
+
+@media (min-width: 640px) {
+    .invoice-table-row div:nth-child(6) {
+        display: block;
+    }
+} */
+
+/* Add this to your stylesheet or in your component's styles */
+aside {
+    overflow-y: scroll;
+    /* Always show scrollbar for Firefox */
+    scrollbar-width: thin;
+    /* For Firefox */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+aside::-webkit-scrollbar {
+    width: 0.5em;
+    /* Set the width of the scrollbar */
+}
+
+aside::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Hide the thumb */
+}
+
+aside::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* Hide the track */
+}
+
+/* Add this if you want to allow scrolling on hover or focus */
+aside:hover,
+aside:focus {
+    overflow-y: auto;
+    /* Show scrollbar on hover or focus */
+}
