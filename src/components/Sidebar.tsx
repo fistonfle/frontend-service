@@ -42,6 +42,7 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
     { icon: <FaMoneyBill />, text: "Payments", url: "/payments" },
     { icon: <FaPiggyBank />, text: "Savings", url: "/savings" },
     { icon: <FaChartArea />, text: "Savings Totals", url: "/saving-totals" },
+    { icon: <FaMoneyBill />, text: "Withdrawal Requests", url: "/withdrawal-requests" },
     { icon: <FaFileInvoice />, text: "Monthly Reports", url: "/reports" },
     {
       icon: <FaChartBar />,
@@ -83,6 +84,11 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
         url: "/profile-edit-requests",
       },
       { icon: <FaMoneyCheck />, text: "Loan Requests", url: "/loan-requests" },
+      {
+        icon: <FaMoneyBill />,
+        text: "Withdrawal Requests",
+        url: "/withdrawal-requests",
+      },
       {
         icon: <FaChartBar />,
         text: "Expense Requests",
