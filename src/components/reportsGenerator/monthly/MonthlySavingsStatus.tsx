@@ -155,7 +155,7 @@ export default function MonthlySavingsStatus({ reportId }: { reportId: string })
                 showSearch
                 allowClear
                 filterOption={(input, option) =>
-                  (option?.label || "")
+                  String(option?.label ?? "")
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
