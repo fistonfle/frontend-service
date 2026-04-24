@@ -7,6 +7,12 @@ import EditMemberModal from "./EditMemberModal";
 import MemberInformationReport from "../reportsGenerator/MemberInformationReport";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { formatCurrency } from "../../utils/functions";
+import axiosInstance from "../../helpers/axios";
+import url from "../../helpers/url";
+import toast from "react-hot-toast";
+import { AppContext } from "../../context/AppContext";
+import { handleApiError } from "../../utils/handleApiError";
+import RecentActivities from "../activities/RecentActivities";
 
 const customStyles = {
   content: {
@@ -61,12 +67,34 @@ const UsersTable: React.FC<UsersTableProps> = ({
   const [selectedUserUser, setSelectedUser] = React.useState<Partial<User>>({});
   const [isApproveModalOpen, setIsApprovedModalOpen] = React.useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  const [isActivitiesModalOpen, setIsActivitiesModalOpen] =
+    React.useState(false);
+  const [activities, setActivities] = React.useState<any[]>([]);
   const [search, setSearch] = React.useState("");
+  const { handleLogout } = React.useContext(AppContext);
 
   const closeModal = () => {
     setIsApprovedModalOpen(false);
     setIsEditModalOpen(false);
+    setIsActivitiesModalOpen(false);
     setSelectedUser({});
+    setActivities([]);
+  };
+
+  const openActivities = async (user: User) => {
+    try {
+      setSelectedUser(user);
+      const response = await axiosInstance.get(
+        url + `/activities/member/${user.id}`
+      );
+      setActivities(response.data?.data || []);
+      setIsActivitiesModalOpen(true);
+      setIsApprovedModalOpen(false);
+      setIsEditModalOpen(false);
+    } catch (error: any) {
+      handleApiError(error, handleLogout);
+      toast.error(error.response?.data?.message || "Failed to load activities");
+    }
   };
 
   const isUserMatchSearch = (user: User) => {
@@ -85,13 +113,17 @@ const UsersTable: React.FC<UsersTableProps> = ({
   return (
     <section>
       <Modal
-        isOpen={isApproveModalOpen || isEditModalOpen}
+        isOpen={isApproveModalOpen || isEditModalOpen || isActivitiesModalOpen}
         onRequestClose={closeModal}
         style={customStyles}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-medium text-gray-700">
-            {isApproveModalOpen ? "Approve" : "Edit"}{" "}
+            {isApproveModalOpen
+              ? "Approve"
+              : isEditModalOpen
+              ? "Edit"
+              : "Activities"}{" "}
             {selectedUserUser.firstname} {selectedUserUser.lastname}
           </h2>
           <button
@@ -111,7 +143,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
             requestLetter={selectedUserUser.requestLetter}
             memberID={selectedUserUser.memberID || ""}
           />
-        ) : (
+        ) : isEditModalOpen ? (
           <EditMemberModal
             user={selectedUserUser}
             onSuccessfulSubmit={() => {
@@ -119,6 +151,11 @@ const UsersTable: React.FC<UsersTableProps> = ({
               reloadUsers();
             }}
             isPresident={isPresident}
+          />
+        ) : (
+          <RecentActivities
+            title="Recent activities on this member"
+            activities={activities}
           />
         )}
       </Modal>
@@ -215,6 +252,14 @@ const UsersTable: React.FC<UsersTableProps> = ({
                     </>
                   )}
                   <MemberInformationReport userId={user.id} />
+                  {(isManager || isPresident) && (
+                    <button
+                      className="text-indigo-600 hover:text-indigo-900 ml-3 text-xs"
+                      onClick={() => openActivities(user)}
+                    >
+                      Activities
+                    </button>
+                  )}
                 </div>
               )}
             </div>

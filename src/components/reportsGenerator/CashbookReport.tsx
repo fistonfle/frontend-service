@@ -109,7 +109,7 @@ const CashbookReport = () => {
         <div className="p-4 bg-white rounded-xl">
           <div ref={targetRef}>
             <h1 className="text-3xl font-bold text-center mb-5">
-              COMPASSION SAVE TO SERVE GROUP
+              FAM GOLD GROUP
             </h1>
             <h1 className="text-2xl font-bold text-center mb-5">
               CASH BOOK / BANK RECONCILIATION

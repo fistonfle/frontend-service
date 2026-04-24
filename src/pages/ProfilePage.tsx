@@ -8,12 +8,23 @@ import Input from "../components/reusable/Input";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { handleApiError } from "../utils/handleApiError";
+import RecentActivities from "../components/activities/RecentActivities";
 
 const ProfilePage = () => {
   const { reloadUser, user } = useContext(AppContext);
+  const [activities, setActivities] = React.useState<any[]>([]);
+  const { handleLogout } = React.useContext(AppContext);
+
   useEffect(() => {
     reloadUser?.();
-    (async () => {})();
+    (async () => {
+      try {
+        const response = await axiosInstance.get(url + "/activities/my");
+        setActivities(response.data?.data || []);
+      } catch (error: any) {
+        handleApiError(error, handleLogout);
+      }
+    })();
   }, []);
 
   const {
@@ -40,8 +51,6 @@ const ProfilePage = () => {
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const navigation = useNavigate();
-
-  const { handleLogout } = React.useContext(AppContext);
 
   const handleEdit = async () => {
     try {
@@ -112,6 +121,12 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
+
+        <RecentActivities
+          title="Recent activities on my profile"
+          activities={activities}
+        />
+
         {/* handle profile edits requests */}
         <div className="mt-4">
           {!edit && (

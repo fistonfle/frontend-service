@@ -137,7 +137,7 @@ const MemberInformationReport: React.FC<MemberInformationReportProps> = ({
           <div className="p-4 bg-white rounded-xl shadow-sm">
             <div ref={targetRef}>
               <h1 className="text-xl font-medium text-center mb-8 text-gray-700">
-                COMPASSION SAVE TO SERVE GROUP
+                FAM GOLD GROUP
               </h1>
               <div className="border-b border-gray-300 mb-6 flex justify-center">
                 <h1 className="text-lg font-bold text-gray-700">

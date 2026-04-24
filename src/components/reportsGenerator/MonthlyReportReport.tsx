@@ -10,6 +10,7 @@ import MonthlyInterests from "./monthly/MonthlyInterests";
 import MonthlyLoanRecovery from "./monthly/MonthlyLoanRecovery";
 import AccountingSummary from "./monthly/AccountingSummary";
 import AllStatementComparison from "./monthly/AllStatementComparison";
+import MonthlySavingsStatus from "./monthly/MonthlySavingsStatus";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import { AppContext } from "../../context/AppContext";
 import { handleApiError } from "../../utils/handleApiError";
@@ -271,6 +272,8 @@ const MonthlyReportReport = ({
                 monthlyLoanRecovery={reportData?.monthlyLoanRecovery}
               />
             </div>
+
+            <MonthlySavingsStatus reportId={reportId} />
           </div>
         </ReactModal>
       </div>

@@ -10,7 +10,7 @@ const AllStatementComparison = ({ allStatementComparison = {} }: Props) => {
   return (
     <div className="w-full mb-40">
       <h1 className="text-2xl font-medium text-center mb-10">
-        COMPASSION SAVE TO SERVE GROUP
+        FAM GOLD GROUP
       </h1>
       <div className="border-b border-gray-400 flex items-center justify-center gap-4 pb-4">
         <h1 className="text-xl font-bold text-center mb-2">

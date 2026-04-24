@@ -9,6 +9,8 @@ type Saving = {
   user: any;
   userId: any;
   savingAmount: number;
+  paidAmount?: number;
+  paymentStatus?: "PAID" | "UNPAID";
   totalAmount: number;
   savingTotals: any;
   savingType: string;
@@ -56,11 +58,13 @@ const SavingsTable: React.FC<SavingsTableProps> = ({ savings }) => {
       </div>
       {/* End of search container and input */}
       <div className="invoice-table-row invoice-table-header bg-white mt-10 rounded-xl px-10 py-4 flex items-center justify-between gap-x-3 text-sm font-semibold text-gray-600">
-        <div className="text-left w-[20%]">Names</div>
-        <div className="text-left w-[20%]">Report Name</div>
-        <div className="text-left w-[20%]">Savings Amount</div>
-        <div className="text-left w-[20%]">Total Amount</div>
-        <div className="text-left w-[20%]">Savings Type</div>
+        <div className="text-left w-[16%]">Names</div>
+        <div className="text-left w-[16%]">Report Name</div>
+        <div className="text-left w-[14%]">Expected</div>
+        <div className="text-left w-[14%]">Paid</div>
+        <div className="text-left w-[12%]">Status</div>
+        <div className="text-left w-[14%]">Debt</div>
+        <div className="text-left w-[14%]">Type</div>
       </div>
       <div className="bg-white mt-5 rounded-xl text-sm text-gray-500 divide-y divide-indigo-50 overflow-x-auto shadow">
         {filteredSavings.map((saving, index) => (
@@ -68,21 +72,32 @@ const SavingsTable: React.FC<SavingsTableProps> = ({ savings }) => {
             key={index}
             className="invoice-table-row flex items-center justify-between px-10 py-4"
           >
-            <div className="text-left w-[20%]">
+            <div className="text-left w-[16%]">
               {saving.user?.firstname} {saving.user?.lastname}
             </div>
-            <div className="text-left w-[20%] pl-2">
+            <div className="text-left w-[16%] pl-2">
               {saving.report?.name || saving.incomeActivity?.report?.name}
             </div>
-            <div className="text-left w-[20%] pl-2">
+            <div className="text-left w-[14%] pl-2">
               {formatCurrency(saving.savingAmount || 0)} RWF
             </div>
-            <div className="text-left w-[20%] pl-2">
-              {formatCurrency(saving.totalAmount || 0)} RWF
+            <div className="text-left w-[14%] pl-2">
+              {formatCurrency(saving.paidAmount || 0)} RWF
             </div>
-            <div className="text-left w-[20%] pl-2">
+            <div className="text-left w-[12%] pl-2">
+              {saving.paymentStatus || "PAID"}
+            </div>
+            <div className="text-left w-[14%] pl-2">
+              {formatCurrency(
+                Math.max(0, (saving.savingAmount || 0) - (saving.paidAmount || 0))
+              )}{" "}
+              RWF
+            </div>
+            <div className="text-left w-[14%] pl-2">
               {(saving.savingType === "MANUAL"
                 ? "Bank Deposit"
+                : saving.savingType === "PREDEPOSIT"
+                ? "Predeposit"
                 : saving.savingType
               )
                 ?.split("_")

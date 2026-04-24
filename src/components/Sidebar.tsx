@@ -4,14 +4,12 @@ import {
   FaBars,
   FaChartArea,
   FaChartBar,
-  FaChartLine,
   FaCog,
   FaFileExcel,
   FaFileInvoice,
   FaFolder,
   FaHome,
   FaMoneyBill,
-  FaMoneyBillWave,
   FaMoneyCheck,
   FaPiggyBank,
   FaSignOutAlt,
@@ -44,14 +42,7 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
     { icon: <FaMoneyBill />, text: "Payments", url: "/payments" },
     { icon: <FaPiggyBank />, text: "Savings", url: "/savings" },
     { icon: <FaChartArea />, text: "Savings Totals", url: "/saving-totals" },
-    { icon: <FaMoneyBillWave />, text: "Withdrawals", url: "/withdrawals" },
-    {
-      icon: <FaMoneyBillWave />,
-      text: "Withdrawal Requests",
-      url: "/withdrawal-requests",
-    },
     { icon: <FaFileInvoice />, text: "Monthly Reports", url: "/reports" },
-    { icon: <FaChartLine />, text: "Income Savings", url: "/income-savings" },
     {
       icon: <FaChartBar />,
       text: "Expense Contributions",
@@ -67,11 +58,6 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
     { icon: <FaStore />, text: "Bank Balance", url: "/bank-balance" },
     { icon: <FaSignOutAlt />, text: "Exit Requests", url: "/exit-requests" },
     { icon: <FaMoneyCheck />, text: "Request Loan", url: "/request-loan" },
-    {
-      icon: <FaMoneyBillWave />,
-      text: "Request Withdrawal",
-      url: "/request-withdrawal",
-    },
     {
       icon: <FaSignOutAlt />,
       text: "Request Exit",
@@ -98,27 +84,12 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
       },
       { icon: <FaMoneyCheck />, text: "Loan Requests", url: "/loan-requests" },
       {
-        icon: <FaMoneyCheck />,
-        text: "Withdrawal Requests",
-        url: "/withdrawal-requests",
-      },
-      {
-        icon: <FaChartLine />,
-        text: "Income Requests",
-        url: "/income-requests",
-      },
-      {
         icon: <FaChartBar />,
         text: "Expense Requests",
         url: "/expense-requests",
       },
       { icon: <FaSignOutAlt />, text: "Exit Requests", url: "/exit-requests" },
       { icon: <FaMoneyCheck />, text: "Request Loan", url: "/request-loan" },
-      {
-        icon: <FaMoneyBillWave />,
-        text: "Request Withdrawal",
-        url: "/request-withdrawal",
-      },
       {
         icon: <FaSignOutAlt />,
         text: "Request Exit",
@@ -137,11 +108,6 @@ const Menu = ({ activeRoute = "" }: { activeRoute?: string }) => {
       },
       { icon: <FaUsers />, text: "Profile", url: "/profile" },
       { icon: <FaMoneyCheck />, text: "Request Loan", url: "/request-loan" },
-      {
-        icon: <FaMoneyBillWave />,
-        text: "Request Withdrawal",
-        url: "/request-withdrawal",
-      },
       {
         icon: <FaSignOutAlt />,
         text: "Request Exit",

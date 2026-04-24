@@ -17,6 +17,8 @@ type Saving = {
 type SavingFormProps = {
   newSaving: Partial<Saving>;
   isSubmitting: boolean;
+  action: "MANUAL" | "PREDEPOSIT" | "PAY_DEBT";
+  onActionChange: (action: "MANUAL" | "PREDEPOSIT" | "PAY_DEBT") => void;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSave: () => void;
   onClose: () => void;
@@ -32,6 +34,8 @@ const SavingForm: React.FC<SavingFormProps> = ({
   onInputChange,
   onSave,
   isSubmitting,
+  action,
+  onActionChange,
 }) => {
   const [usersOptions, setUsersOptions] = React.useState<Option[]>([]);
   const [reportsOptions, setReportsOptions] = React.useState<Option[]>([]);
@@ -70,34 +74,50 @@ const SavingForm: React.FC<SavingFormProps> = ({
       className="space-y-5"
     >
       <div className="flex flex-col space-y-3">
+        <label className="text-sm font-semibold text-gray-600">Action</label>
+        <Select
+          className="w-full"
+          value={action}
+          options={[
+            { value: "PAY_DEBT", label: "Pay Saving Debt (clears oldest unpaid months)" },
+            { value: "PREDEPOSIT", label: "Predeposit (advance contributions)" },
+            { value: "MANUAL", label: "Manual Saving (attach to report)" },
+          ]}
+          onChange={(value) => onActionChange(value as any)}
+        />
+
+        {action === "MANUAL" && (
         <label
           htmlFor="reportId"
           className="text-sm font-semibold text-gray-600"
         >
           Report Name
         </label>
-        <Select
-          id="reportId"
-          className="w-full"
-          placeholder="Select Report"
-          options={reportsOptions}
-          value={newSaving.reportId || "Select Report"}
-          onChange={(value) => {
-            onInputChange({
-              target: {
-                name: "reportId",
-                value,
-              },
-            } as any);
-          }}
-          showSearch
-          allowClear
-          filterOption={(input, option) =>
-            (option?.label || "")
-              ?.toLowerCase()
-              ?.indexOf(input.toLowerCase()) >= 0
-          }
-        />
+        )}
+        {action === "MANUAL" && (
+          <Select
+            id="reportId"
+            className="w-full"
+            placeholder="Select Report"
+            options={reportsOptions}
+            value={newSaving.reportId || "Select Report"}
+            onChange={(value) => {
+              onInputChange({
+                target: {
+                  name: "reportId",
+                  value,
+                },
+              } as any);
+            }}
+            showSearch
+            allowClear
+            filterOption={(input, option) =>
+              (option?.label || "")
+                ?.toLowerCase()
+                ?.indexOf(input.toLowerCase()) >= 0
+            }
+          />
+        )}
         <label htmlFor="userId" className="text-sm font-semibold text-gray-600">
           Member
         </label>
@@ -125,7 +145,13 @@ const SavingForm: React.FC<SavingFormProps> = ({
         />
         <Input
           type="number"
-          label="Saving Amount"
+          label={
+            action === "PAY_DEBT"
+              ? "Payment Amount"
+              : action === "PREDEPOSIT"
+              ? "Predeposit Amount"
+              : "Saving Amount"
+          }
           name="savingAmount"
           value={newSaving.savingAmount || ""}
           onInputChange={onInputChange}

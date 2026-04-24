@@ -154,7 +154,7 @@ const LoanAmoritisationReport = ({
           <div className="p-4 bg-white rounded-xl">
             <div ref={targetRef}>
               <h1 className="text-2xl font-medium text-center mb-20">
-                COMPASSION SAVE TO SERVE GROUP
+                FAM GOLD GROUP
               </h1>
               <div className="border-b border-gray-400 mb-5 flex flex-row justify-between w-full px-10">
                 <div></div>

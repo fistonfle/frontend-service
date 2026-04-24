@@ -10,7 +10,7 @@ const MonthlyInterests = ({ monthlyInterests = {} }: Props) => {
   return (
     <div className="w-full mt-40">
       <h1 className="text-2xl font-medium text-center mb-10">
-        COMPASSION SAVE TO SERVE GROUP
+        FAM GOLD GROUP
       </h1>
       <div className="border border-gray-400 w-[50%] mx-auto mb-10">
         <div className="flex items-center justify-between gap-8 p-4">

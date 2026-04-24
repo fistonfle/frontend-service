@@ -6,6 +6,7 @@ type SavingTotal = {
   id: string;
   user: any;
   totalAmount: number;
+  predepositBalance?: number;
 };
 
 type SavingTotalsTableProps = {
@@ -52,8 +53,9 @@ const SavingTotalsTable: React.FC<SavingTotalsTableProps> = ({
       </div>
       {/* End of search container and input */}
       <div className="invoice-table-row invoice-table-header bg-white mt-10 rounded-xl px-10 py-4 flex items-center justify-between gap-x-3 text-sm font-semibold text-gray-600">
-        <div className="text-left w-[40%]">Names</div>
-        <div className="text-left w-[40%]">Total Amount</div>
+        <div className="text-left w-[34%]">Names</div>
+        <div className="text-left w-[33%]">Total Amount</div>
+        <div className="text-left w-[33%]">Predeposit Balance</div>
       </div>
       <div className="bg-white mt-5 rounded-xl text-sm text-gray-500 divide-y divide-indigo-50 overflow-x-auto shadow">
         {filteredSavingTotals.map((savingTotal, index) => (
@@ -61,11 +63,14 @@ const SavingTotalsTable: React.FC<SavingTotalsTableProps> = ({
             key={index}
             className="invoice-table-row flex items-center justify-between px-10 py-4"
           >
-            <div className="text-left w-[40%]">
+            <div className="text-left w-[34%]">
               {savingTotal.user?.firstname} {savingTotal.user?.lastname}
             </div>
-            <div className="text-left w-[40%] pl-2">
+            <div className="text-left w-[33%] pl-2">
               {formatCurrency(savingTotal.totalAmount || 0)} RWF
+            </div>
+            <div className="text-left w-[33%] pl-2">
+              {formatCurrency(savingTotal.predepositBalance || 0)} RWF
             </div>
           </div>
         ))}

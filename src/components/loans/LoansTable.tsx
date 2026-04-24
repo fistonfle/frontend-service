@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import LoanAmoritisationReport from "../reportsGenerator/LoanAmoritisationReport";
+import LoanPaymentsReport from "../reportsGenerator/LoanPaymentsReport";
 import RescheduleButton from "./RescheduleButton";
 import RescheduledLoanAmoritisationReport from "../reportsGenerator/RescheduledLoanAmoritisationReport";
 import { formatCurrency } from "../../utils/functions";
@@ -160,6 +161,7 @@ const LoansTable: React.FC<LoansTableProps> = ({ loans, reloadLoans }) => {
               ) : (
                 <LoanAmoritisationReport loanId={loan.id} loan={loan} />
               )}
+              <LoanPaymentsReport loanId={loan.id} loan={loan} />
             </div>
           </div>
         ))}

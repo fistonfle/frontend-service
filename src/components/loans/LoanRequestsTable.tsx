@@ -40,6 +40,8 @@ const LoanRequestsTable: React.FC<LoanRequestsTableProps> = ({
   const [completingLoanRequest, setCompletingLoanRequest] = React.useState<
     string | null
   >(null);
+  const [rejectingApprovedLoanRequest, setRejectingApprovedLoanRequest] =
+    React.useState<string | null>(null);
   const { handleLogout } = React.useContext(AppContext);
 
   const approveLoanRequest = async (requestIdToApprove: string) => {
@@ -113,6 +115,33 @@ const LoanRequestsTable: React.FC<LoanRequestsTableProps> = ({
       toast.error(errorMessage);
     } finally {
       setCompletingLoanRequest(null);
+    }
+  };
+
+  const rejectApprovedLoanRequest = async (requestIdToReject: string) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to reject this APPROVED request? (Loan will not be created)"
+      )
+    ) {
+      return;
+    }
+    try {
+      setRejectingApprovedLoanRequest(requestIdToReject);
+      const response = await axiosInstance.put(
+        url + `/loan-requests/${requestIdToReject}/reject-approved`
+      );
+      console.log(response.data);
+      toast.success("Approved loan request rejected successfully");
+      reloadLoanRequests();
+    } catch (error: any) {
+      handleApiError(error, handleLogout);
+      console.log(error);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
+    } finally {
+      setRejectingApprovedLoanRequest(null);
     }
   };
 
@@ -239,15 +268,26 @@ const LoanRequestsTable: React.FC<LoanRequestsTableProps> = ({
               <div className="text-left w-[14%] pl-2 flex items-center">
                 {/* approve and reject buttons */}
                 {loanRequest.completedStatus === "PENDING" && (
-                  <button
-                    className="bg-green-500 text-white px-3 py-2 mr-2 rounded-md hover:bg-green-600"
-                    onClick={() => completeLoanRequest(loanRequest.id)}
-                    disabled={completingLoanRequest === loanRequest.id}
-                  >
-                    {completingLoanRequest === loanRequest.id
-                      ? "Completing..."
-                      : "Complete"}
-                  </button>
+                  <>
+                    <button
+                      className="bg-green-500 text-white px-3 py-2 mr-2 rounded-md hover:bg-green-600"
+                      onClick={() => completeLoanRequest(loanRequest.id)}
+                      disabled={completingLoanRequest === loanRequest.id}
+                    >
+                      {completingLoanRequest === loanRequest.id
+                        ? "Completing..."
+                        : "Complete"}
+                    </button>
+                    <button
+                      className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
+                      onClick={() => rejectApprovedLoanRequest(loanRequest.id)}
+                      disabled={rejectingApprovedLoanRequest === loanRequest.id}
+                    >
+                      {rejectingApprovedLoanRequest === loanRequest.id
+                        ? "Rejecting..."
+                        : "Reject"}
+                    </button>
+                  </>
                 )}
               </div>
             ) : null}
